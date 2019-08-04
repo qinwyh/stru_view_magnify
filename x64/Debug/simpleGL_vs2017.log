@@ -1,0 +1,103 @@
+﻿  Compiling CUDA source file demo.cu...
+  
+  C:\ProgramData\NVIDIA Corporation\CUDA Samples\v10.1\2_Graphics\demo>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\bin\nvcc.exe" -gencode=arch=compute_30,code=\"sm_30,compute_30\" -gencode=arch=compute_35,code=\"sm_35,compute_35\" -gencode=arch=compute_37,code=\"sm_37,compute_37\" -gencode=arch=compute_50,code=\"sm_50,compute_50\" -gencode=arch=compute_52,code=\"sm_52,compute_52\" -gencode=arch=compute_60,code=\"sm_60,compute_60\" -gencode=arch=compute_61,code=\"sm_61,compute_61\" -gencode=arch=compute_70,code=\"sm_70,compute_70\" -gencode=arch=compute_75,code=\"sm_75,compute_75\" --use-local-env -ccbin "C:\Microsoft Visual Studio\VC\Tools\MSVC\14.15.26726\bin\HostX86\x64" -x cu  -I./ -I../../common/inc -I./ -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\/include" -I../../common/inc -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\include"  -G   --keep-dir x64\Debug -maxrregcount=0  --machine 64 --compile -cudart static -Xcompiler "/wd 4819" -g   -DWIN32 -DWIN32 -D_MBCS -D_MBCS -Xcompiler "/EHsc /W3 /nologo /Od /Fdx64/Debug/vc141.pdb /FS /Zi /RTC1 /MTd " -o x64/Debug/demo.cu.obj "C:\ProgramData\NVIDIA Corporation\CUDA Samples\v10.1\2_Graphics\demo\demo.cu" 
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(816): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(823): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(830): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(837): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(844): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(851): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(816): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(823): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(830): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(837): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(844): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(851): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(816): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(823): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(830): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(837): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(844): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(851): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(816): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(823): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(830): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(837): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(844): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(851): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(816): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(823): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(830): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(837): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(844): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(851): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(816): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(823): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(830): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(837): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(844): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(851): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(816): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(823): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(830): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(837): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(844): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(851): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(816): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(823): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(830): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(837): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(844): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(851): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(816): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(823): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(830): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(837): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(844): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(851): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(816): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(823): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(830): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(837): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(844): warning : transfer of control bypasses initialization of:
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(851): warning : transfer of control bypasses initialization of:
+  demo.cu
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(163): warning C4244: “+=”: 从“double”转换到“float”，可能丢失数据
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(211): warning C4244: “+=”: 从“double”转换到“float”，可能丢失数据
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(218): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(219): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(236): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(237): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(242): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(243): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(252): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(253): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(260): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(261): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(267): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(271): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(275): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(355): warning C4244: “+=”: 从“double”转换到“float”，可能丢失数据
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(356): warning C4244: “+=”: 从“double”转换到“float”，可能丢失数据
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(357): warning C4244: “-=”: 从“double”转换到“float”，可能丢失数据
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(358): warning C4244: “-=”: 从“double”转换到“float”，可能丢失数据
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(402): warning C4244: “+=”: 从“double”转换到“float”，可能丢失数据
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(403): warning C4244: “+=”: 从“double”转换到“float”，可能丢失数据
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(404): warning C4244: “-=”: 从“double”转换到“float”，可能丢失数据
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(405): warning C4244: “-=”: 从“double”转换到“float”，可能丢失数据
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(444): warning C4244: “+=”: 从“double”转换到“float”，可能丢失数据
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(445): warning C4244: “+=”: 从“double”转换到“float”，可能丢失数据
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(446): warning C4244: “-=”: 从“double”转换到“float”，可能丢失数据
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(447): warning C4244: “-=”: 从“double”转换到“float”，可能丢失数据
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(452): warning C4305: “初始化”: 从“double”到“float”截断
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(527): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(529): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(545): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(546): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(896): warning C4533: “goto grid”跳过了“Error”的初始化操作
+  C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(865): note: 参见“grid”的声明
+  C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(896): note: 参见“Error”的声明
+C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(896): warning C4533: “goto block”跳过了“Error”的初始化操作
+  C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(864): note: 参见“block”的声明
+  C:/ProgramData/NVIDIA Corporation/CUDA Samples/v10.1/2_Graphics/demo/demo.cu(896): note: 参见“Error”的声明
+  simpleGL_vs2017.vcxproj -> C:\ProgramData\NVIDIA Corporation\CUDA Samples\v10.1\2_Graphics\demo\../../bin/win64/Debug/simpleGL.exe
