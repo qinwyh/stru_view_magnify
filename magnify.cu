@@ -356,6 +356,7 @@ void computeAllCons() {
 	/************************************************/
 	// Structure constraints
 	/************************************************/
+	edge[55 * vertexNum + 70] = true;
 	for (int i = 0; i < vertexNum; i++) {
 		for (int j = i; j < vertexNum; j++) {
 			if (edge[i * vertexNum + j] == TRUE) {
@@ -390,6 +391,7 @@ void computeAllCons() {
 			}
 		}
 	}
+	edge[55 * vertexNum + 70] = false;
 
 
 	/************************************************/
