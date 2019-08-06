@@ -59,10 +59,16 @@ extern float *matrixA;
 extern float *vectorB_X, *vectorB_Y;
 extern float *cons_vectorB_X, *cons_vectorB_Y;
 
+extern float *tmpVector, *tmpX, *tmpY;
+extern float *vectorD, *vectorR;
+
 extern int *tmpEdge;
 
 
 // CUDA函数
+// 向量并行求和
+cudaError_t addMulWithCuda(float *c, const float *a, const float *b, unsigned int size, const float m, const float n);
+
 // 向量并行求和
 cudaError_t addWithCuda(float *c, const float *a, const float *b, unsigned int size);
 
@@ -81,30 +87,29 @@ void computeAllCons();
 
 // 共轭梯度法求解结果坐标（测试用）
 void conjGradientSolver() {
-	//printf("conj!!!!! %6.2f\n", resultPosX[0]);
+	printf("add with new CUDA\n");
+
+	float* tmpUse = new float[vertexNum];
 
 	// 获取此次time constraints
-	for (int i = 0; i < vertexNum; i++) {
+	/*for (int i = 0; i < vertexNum; i++) {
 		vectorB_X[i] = cons_vectorB_X[i] + resultPosX[i] * 2 * REAL_AXIS;
 		vectorB_Y[i] = cons_vectorB_Y[i] + resultPosY[i] * 2 * REAL_AXIS;
-	}
+	}*/
 
+	addMulWithCuda(vectorB_X, cons_vectorB_X, resultPosX, vertexNum, 1, 2 * REAL_AXIS);
+	addMulWithCuda(vectorB_Y, cons_vectorB_Y, resultPosY, vertexNum, 1, 2 * REAL_AXIS);
 
-	// 初始化残差向量等变量
-	float *tmpVector = new float[vertexNum];
-	float *tmpX = new float[vertexNum];
-	float *tmpY = new float[vertexNum];
-	float *vectorD = new float[vertexNum];
-	float *vectorR = new float[vertexNum];
 	
 	::memset(tmpX, 0, vertexNum * sizeof(float));
 	::memset(tmpY, 0, vertexNum * sizeof(float));
 	::memset(vectorD, 0, vertexNum * sizeof(float));
 
 	// 计算X方向上的向量
-	for (int i = 0; i < vertexNum; i++) {
+	/*for (int i = 0; i < vertexNum; i++) {
 		vectorR[i] = -vectorB_X[i];
-	}
+	}*/
+	minusWithCuda(vectorR, tmpX, vectorB_X, vertexNum);
 
 	for (int nor = 0; nor < vertexNum * 3; nor++) {
 		float denom = 0, num = 0;
@@ -135,15 +140,18 @@ void conjGradientSolver() {
 		}*/
 		mulWithCuda(vectorR, vectorR, &num, 1, vertexNum, 1);
 
-		if (num < 0.000001) {
+		if (num < 0.00001) {
 			//printf("x is break\n");
 			break;
 		}
 
 		//计算方向向量d
-		for (int i = 0; i < vertexNum; i++) {
+		/*for (int i = 0; i < vertexNum; i++) {
 			vectorD[i] = -vectorR[i] + num / denom * vectorD[i];
-		}
+		}*/
+		::memcpy(tmpUse, vectorD, vertexNum * sizeof(float));
+		addMulWithCuda(vectorD, tmpUse, vectorR, vertexNum, num / denom, -1.0);
+		
 
 		//计算d的转置乘以r
 		/*for (int i = 0; i < vertexNum; i++) {
@@ -164,9 +172,11 @@ void conjGradientSolver() {
 
 		//计算步长
 		double a = -num2 / denom2;
-		for (int i = 0; i < vertexNum; i++) {
+		/*for (int i = 0; i < vertexNum; i++) {
 			tmpX[i] += a * vectorD[i];
-		}
+		}*/
+		::memcpy(tmpUse, tmpX, vertexNum * sizeof(float));
+		addMulWithCuda(tmpX, tmpUse, vectorD, vertexNum, 1.0, (float)a);
 
 		//printf("all X with CUDA!\n");
 	}
@@ -174,9 +184,10 @@ void conjGradientSolver() {
 
 	// 计算y方向上的向量
 	::memset(vectorD, 0, vertexNum * sizeof(float));
-	for (int i = 0; i < vertexNum; i++) {
+	/*for (int i = 0; i < vertexNum; i++) {
 		vectorR[i] = -vectorB_Y[i];
-	}
+	}*/
+	minusWithCuda(vectorR, tmpY, vectorB_Y, vertexNum);
 
 	for (int nor = 0; nor < vertexNum * 3; nor++) {
 		float denom = 0, num = 0;
@@ -193,15 +204,17 @@ void conjGradientSolver() {
 		//计算r的转置乘以r
 		mulWithCuda(vectorR, vectorR, &num, 1, vertexNum, 1);
 
-		if (num < 0.000001) {
+		if (num < 0.00001) {
 			//printf("y is break\n");
 			break;
 		}
 
 		//计算方向向量d
-		for (int i = 0; i < vertexNum; i++) {
+		/*for (int i = 0; i < vertexNum; i++) {
 			vectorD[i] = -vectorR[i] + num / denom * vectorD[i];
-		}
+		}*/
+		::memcpy(tmpUse, vectorD, vertexNum * sizeof(float));
+		addMulWithCuda(vectorD, tmpUse, vectorR, vertexNum, num / denom, -1.0);
 
 		//计算d的转置乘以r
 		mulWithCuda(vectorD, vectorR, &num2, 1, vertexNum, 1);
@@ -212,9 +225,11 @@ void conjGradientSolver() {
 
 		//计算步长
 		double a = -num2 / denom2;
-		for (int i = 0; i < vertexNum; i++) {
+		/*for (int i = 0; i < vertexNum; i++) {
 			tmpY[i] += a * vectorD[i];
-		}
+		}*/
+		::memcpy(tmpUse, tmpY, vertexNum * sizeof(float));
+		addMulWithCuda(tmpY, tmpUse, vectorD, vertexNum, 1.0, (float)a);
 
 		//printf("all Y with CUDA!\n");
 	}
@@ -226,11 +241,8 @@ void conjGradientSolver() {
 	}
 
 	// free
-
-	//delete struConsVecX, struConsVecY;
-	delete tmpX, tmpY, tmpVector;
-	delete vectorD;
-	delete vectorR;
+	delete tmpUse;
+	
 }
 
 
@@ -356,6 +368,7 @@ void computeAllCons() {
 	/************************************************/
 	// Structure constraints
 	/************************************************/
+	edge[55 * vertexNum + 70] = true;
 	for (int i = 0; i < vertexNum; i++) {
 		for (int j = i; j < vertexNum; j++) {
 			if (edge[i * vertexNum + j] == TRUE) {
@@ -390,6 +403,7 @@ void computeAllCons() {
 			}
 		}
 	}
+	edge[55 * vertexNum + 70] = false;
 
 
 	/************************************************/
@@ -486,6 +500,11 @@ void freeAll() {
 
 	delete edge;
 	delete tmpEdge;
+
+	//delete struConsVecX, struConsVecY;
+	delete tmpX, tmpY, tmpVector;
+	delete vectorD;
+	delete vectorR;
 }
 
 
@@ -514,6 +533,120 @@ int main(int argc, char *argv[]) {
 								CUDA部分
 ****************************************************************************************
 ****************************************************************************************/
+// mul kernel
+__global__ void addMulKernel(float *c, const float *a, const float *b, const float *m, const float *n)
+{
+	int i = threadIdx.x;
+	c[i] = a[i] * m[0] + b[i] * n[0];
+}
+
+
+// Helper function for using CUDA to add vectors in parallel.
+cudaError_t addMulWithCuda(float *c, const float *a, const float *b, unsigned int size, const float m, const float n)
+{
+	float *dev_a = 0;
+	float *dev_b = 0;
+	float *dev_c = 0;
+	float *dev_m = 0;
+	float *dev_n = 0;
+	cudaError_t cudaStatus;
+
+	// Choose which GPU to run on, change this on a multi-GPU system.
+	cudaStatus = cudaSetDevice(0);
+	if (cudaStatus != cudaSuccess) {
+		fprintf(stderr, "cudaSetDevice failed!  Do you have a CUDA-capable GPU installed?");
+		goto Error;
+	}
+
+	// Allocate GPU buffers for three vectors (two input, one output)    .
+	cudaStatus = cudaMalloc((void**)&dev_c, size * sizeof(float));
+	if (cudaStatus != cudaSuccess) {
+		fprintf(stderr, "cudaMalloc failed!");
+		goto Error;
+	}
+
+	cudaStatus = cudaMalloc((void**)&dev_a, size * sizeof(float));
+	if (cudaStatus != cudaSuccess) {
+		fprintf(stderr, "cudaMalloc failed!");
+		goto Error;
+	}
+
+	cudaStatus = cudaMalloc((void**)&dev_b, size * sizeof(float));
+	if (cudaStatus != cudaSuccess) {
+		fprintf(stderr, "cudaMalloc failed!");
+		goto Error;
+	}
+
+	cudaStatus = cudaMalloc((void**)&dev_m, sizeof(float));
+	if (cudaStatus != cudaSuccess) {
+		fprintf(stderr, "cudaMalloc failed!");
+		goto Error;
+	}
+
+	cudaStatus = cudaMalloc((void**)&dev_n, sizeof(float));
+	if (cudaStatus != cudaSuccess) {
+		fprintf(stderr, "cudaMalloc failed!");
+		goto Error;
+	}
+
+	// Copy input vectors from host memory to GPU buffers.
+	cudaStatus = cudaMemcpy(dev_a, a, size * sizeof(float), cudaMemcpyHostToDevice);
+	if (cudaStatus != cudaSuccess) {
+		fprintf(stderr, "cudaMemcpy failed!");
+		goto Error;
+	}
+
+	cudaStatus = cudaMemcpy(dev_b, b, size * sizeof(float), cudaMemcpyHostToDevice);
+	if (cudaStatus != cudaSuccess) {
+		fprintf(stderr, "cudaMemcpy failed!");
+		goto Error;
+	}
+
+	cudaStatus = cudaMemcpy(dev_m, &m, sizeof(float), cudaMemcpyHostToDevice);
+	if (cudaStatus != cudaSuccess) {
+		fprintf(stderr, "cudaMemcpy failed!");
+		goto Error;
+	}
+
+	cudaStatus = cudaMemcpy(dev_n, &n, sizeof(float), cudaMemcpyHostToDevice);
+	if (cudaStatus != cudaSuccess) {
+		fprintf(stderr, "cudaMemcpy failed!");
+		goto Error;
+	}
+
+	// Launch a kernel on the GPU with one thread for each element.
+	addMulKernel << <1, size >> > (dev_c, dev_a, dev_b, dev_m, dev_n);
+
+	// Check for any errors launching the kernel
+	cudaStatus = cudaGetLastError();
+	if (cudaStatus != cudaSuccess) {
+		fprintf(stderr, "addKernel launch failed: %s\n", cudaGetErrorString(cudaStatus));
+		goto Error;
+	}
+
+	// cudaDeviceSynchronize waits for the kernel to finish, and returns
+	// any errors encountered during the launch.
+	cudaStatus = cudaDeviceSynchronize();
+	if (cudaStatus != cudaSuccess) {
+		fprintf(stderr, "cudaDeviceSynchronize returned error code %d after launching addKernel!\n", cudaStatus);
+		goto Error;
+	}
+
+	// Copy output vector from GPU buffer to host memory.
+	cudaStatus = cudaMemcpy(c, dev_c, size * sizeof(float), cudaMemcpyDeviceToHost);
+	if (cudaStatus != cudaSuccess) {
+		fprintf(stderr, "cudaMemcpy failed!");
+		goto Error;
+	}
+
+Error:
+	cudaFree(dev_c);
+	cudaFree(dev_a);
+	cudaFree(dev_b);
+
+	return cudaStatus;
+}
+
 
 
 // add kernel

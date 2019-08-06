@@ -61,6 +61,9 @@ float *matrixA;
 float *vectorB_X, *vectorB_Y;
 float *cons_vectorB_X, *cons_vectorB_Y;
 
+float *tmpVector, *tmpX, *tmpY;
+float *vectorD, *vectorR; 
+
 //int tmpEdge[19][2] = { {0, 1}, {0, 3}, {0, 5}, {1, 2}, {2, 3}, {3, 4}, {4, 6}, {5, 6}, {6, 7}, {7, 8}, {8, 9},
 //					   {8, 11}, {9, 10}, {11, 12}, {11, 16} , {12, 13}, {13, 14}, {14, 15}, {15, 16}};
 int *tmpEdge;
@@ -241,6 +244,13 @@ void dataTrans() {
 	vectorB_Y = new float[vertexNum];
 	cons_vectorB_X = new float[vertexNum];
 	cons_vectorB_Y = new float[vertexNum];
+
+	// 初始化残差向量等变量
+	tmpVector = new float[vertexNum];
+	tmpX = new float[vertexNum];
+	tmpY = new float[vertexNum];
+	vectorD = new float[vertexNum];
+	vectorR = new float[vertexNum];
 
 
 	// 点集坐标变换
