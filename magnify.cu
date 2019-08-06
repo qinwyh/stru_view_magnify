@@ -23,6 +23,8 @@
 // 自定义头文件
 #include <draw_graph_2d.h>
 
+#define TILE_WIDTH 16 
+
 using namespace std;
 
 // focal area
@@ -87,7 +89,7 @@ void computeAllCons();
 
 // 共轭梯度法求解结果坐标（测试用）
 void conjGradientSolver() {
-	printf("add with new CUDA\n");
+	printf("add with new new CUDA\n");
 
 	float* tmpUse = new float[vertexNum];
 
@@ -368,7 +370,6 @@ void computeAllCons() {
 	/************************************************/
 	// Structure constraints
 	/************************************************/
-	edge[55 * vertexNum + 70] = true;
 	for (int i = 0; i < vertexNum; i++) {
 		for (int j = i; j < vertexNum; j++) {
 			if (edge[i * vertexNum + j] == TRUE) {
@@ -403,7 +404,6 @@ void computeAllCons() {
 			}
 		}
 	}
-	edge[55 * vertexNum + 70] = false;
 
 
 	/************************************************/
@@ -851,6 +851,55 @@ __global__ void gpuMatMultKernel(const float *a, const float *b, float *result, 
 }
 
 
+__global__ void gpuMatMultWithSharedKernel(float *A, float  *B, float *C, int m, int n, int k)
+{
+	//申请共享内存，存在于每个block中
+	__shared__ float ds_A[TILE_WIDTH][TILE_WIDTH];
+	__shared__ float ds_B[TILE_WIDTH][TILE_WIDTH];
+
+	//简化坐标记法,出现下面6个表示的地方就是并行的地方。
+	int bx = blockIdx.x;		int by = blockIdx.y;
+	int tx = threadIdx.x;		int ty = threadIdx.y;
+
+	//确定结果矩阵中的行和列
+	int Row = by * TILE_WIDTH + ty;
+	int Col = bx * TILE_WIDTH + tx;
+
+	//临时变量
+	float Cvalue = 0;
+
+	//循环读入A,B瓦片，计算结果矩阵，分阶段进行计算
+	for (int t = 0; t < (n - 1) / TILE_WIDTH + 1; ++t)
+	{
+		//将A,B矩阵瓦片化的结果放入shared memory中，每个线程加载相应于C元素的A/B矩阵元素
+		if (Row < m && t * TILE_WIDTH + tx < n)		//越界处理，满足任意大小的矩阵相乘（可选）
+			//ds_A[tx][ty] = A[t*TILE_WIDTH + tx][Row];
+			ds_A[tx][ty] = A[Row*n + t * TILE_WIDTH + tx];//以合并的方式加载瓦片
+		else
+			ds_A[tx][ty] = 0.0;
+
+		if (t * TILE_WIDTH + ty < n && Col < k)
+			//ds_B[tx][ty] = B[Col][t*TILE_WIDTH + ty];
+			ds_B[tx][ty] = B[(t*TILE_WIDTH + ty)*k + Col];
+		else
+			ds_B[tx][ty] = 0.0;
+
+		//保证tile中所有的元素被加载
+		__syncthreads();
+
+		for (int i = 0; i < TILE_WIDTH; ++i)
+			Cvalue += ds_A[i][ty] * ds_B[tx][i];//从shared memory中取值
+
+		//确保所有线程完成计算后，进行下一个阶段的计算
+		__syncthreads();
+
+		if (Row < m && Col < k)
+			C[Row*k + Col] = Cvalue;
+	}
+}
+
+
+
 // 调用CUDA运行GPU矩阵乘法核函数
 cudaError_t mulWithCuda(const float *a, const float *b, float *result, const int M, const int N, const int S)
 {
@@ -911,10 +960,10 @@ cudaError_t mulWithCuda(const float *a, const float *b, float *result, const int
 	/*const int THREADNUM = 256;
 	const int BLOCKNUM = (M * S + 255) / 256;*/
 
-	const int BLOCK_SIZE = 16;
+	/*const int BLOCK_SIZE = 16;
 	dim3 block(BLOCK_SIZE, BLOCK_SIZE);
 	dim3 grid((S + BLOCK_SIZE - 1) / BLOCK_SIZE, (M + BLOCK_SIZE - 1) / BLOCK_SIZE);
-	gpuMatMultKernel << <grid, block >> > (dev_a, dev_b, dev_result, M, N, S);
+	gpuMatMultKernel << <grid, block >> > (dev_a, dev_b, dev_result, M, N, S);*/
 	//gpuMatMultWithSharedKernel<16> << <grid, block >> >(dev_a, dev_b, dev_result, M, N, S);
 	//printf("This is NOT shared kernel!\n");
 
@@ -922,6 +971,12 @@ cudaError_t mulWithCuda(const float *a, const float *b, float *result, const int
 	cudaEventSynchronize(gpuFinish);
 	cudaEventElapsedTime(&elapsedTime, gpuStart, gpuFinish);
 	printf("\nThe runing time of GPU on Mat Multiply is %f seconds.\n", elapsedTime / 1000.0);*/
+
+	dim3 dimGrid((S - 1) / TILE_WIDTH + 1, (M - 1) / TILE_WIDTH + 1, 1);	//向上取整
+	dim3 dimBlock(TILE_WIDTH, TILE_WIDTH, 1);
+
+	//调用内核函数
+	gpuMatMultWithSharedKernel << <dimGrid, dimBlock >> > (dev_a, dev_b, dev_result, M, N, S);
 
 	cudaStatus = cudaGetLastError();
 	if (cudaStatus != cudaSuccess)
